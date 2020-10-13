@@ -19,6 +19,7 @@
           :key="index"
           :item="item"
           :is-collapsed="isCollapsed"
+          :use-vue-font="useVueFont"
           :active-show="activeShow"
           :show-one-child="showOneChild"
           :show-child="showChild"
@@ -124,6 +125,10 @@ export default {
       default: false
     },
     disableHover: {
+      type: Boolean,
+      default: false
+    },
+    useVueFont: {
       type: Boolean,
       default: false
     }

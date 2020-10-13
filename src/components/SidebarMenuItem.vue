@@ -26,8 +26,13 @@
       @click.native="clickEvent"
     >
       <sidebar-menu-icon
-        v-if="item.icon && !isMobileItem"
+        v-if="item.icon && !useVueFont && !isMobileItem"
         :icon="item.icon"
+      />
+      <font-awesome-icon
+        v-else-if="item.icon && useVueFont && !isMobileItem"
+        class="vsm--icon"
+        :icon="[item.icon.style, item.icon.name]"
       />
       <transition
         name="fade-animation"
@@ -94,13 +99,20 @@ import pathToRegexp from 'path-to-regexp'
 import SidebarMenuLink from './SidebarMenuLink.vue'
 import SidebarMenuIcon from './SidebarMenuIcon.vue'
 import SidebarMenuBadge from './SidebarMenuBadge.vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+
+library.add(far, fas);
 
 export default {
   name: 'SidebarMenuItem',
   components: {
     SidebarMenuLink,
     SidebarMenuIcon,
-    SidebarMenuBadge
+    SidebarMenuBadge,
+    FontAwesomeIcon
   },
   props: {
     item: {
@@ -113,6 +125,10 @@ export default {
     },
     isCollapsed: {
       type: Boolean
+    },
+    useVueFont: {
+      type: Boolean,
+      default: false
     },
     isMobileItem: {
       type: Boolean,
